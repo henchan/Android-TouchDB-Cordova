@@ -1,4 +1,4 @@
-package com.couchbase.callback;
+package com.couchbase.cordova;
 
 /**
  * This is the main activity for your application.
