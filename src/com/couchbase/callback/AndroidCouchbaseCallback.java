@@ -17,6 +17,8 @@ package com.couchbase.callback;
 
 import java.io.IOException;
 
+import org.apache.cordova.DroidGap;
+
 import android.content.ServiceConnection;
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -24,7 +26,6 @@ import android.util.Log;
 
 import com.couchbase.android.CouchbaseMobile;
 import com.couchbase.android.ICouchbaseDelegate;
-import com.phonegap.DroidGap;
 
 /**
  * Avoid making changes to this class.  If you find the need, please
