@@ -9,5 +9,9 @@
     android:layout_height="wrap_content"
     android:text="Hello World, PhoneGapExample"
     />
+<View
+    android:id="@+id/text"/>
+<View
+    android:id="@+id/image"/>
 </LinearLayout>
 
