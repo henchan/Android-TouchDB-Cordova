@@ -10,34 +10,47 @@ This project requires the latest version of the Android SDK. If you already have
 
 These instructions are divided into two sections, the first describes the development mode.  In this mode you can continually couchapp push your changes in for test.  The second describes distribution mode where you package your application for distribution.
 
-### Development
+### Development (assumes using Eclipse)
+1.  Clone the couchbaselabs/TouchDB-Android repository
 
-1.  Clone this repository
-2.  Create a local.properties pointing to your Android SDK
+	run the TestApp
 
-    sdk.dir=...
+2.  Clone this repository
 
-3.  Build this application, either using eclipse or command line tools
+3.  Build this application, using Eclipse 
 
-    ant debug
+    Debug As --> Android Application
 
 4.  Install/Launch this application on your device/emulator
 
-    adb install bin/AndroidCouchbaseCallback-debug.apk
+    It should now be installed, but waiting on a debugger breaKpoint 
 
-    adb shell am start -n com.couchbase.callback/.AndroidCouchbaseCallback
+5.  TouchDB is now running, so you can install your couchapp.
 
-5.  Couchbase Mobile is now running, you should see now see instructions on screen install your CouchApp.
-
-6.  Forward the Couchbase Mobile from the device to your development machine (the Couchbase port is dynamic and is shown on the screen)
-
-    adb forward tcp:8984 tcp:&lt;value displayed on your screen&gt;
+	You will need to know the ip address of your device.
+	If Terminal Emulator is installed on a rooted device type:
+		su
+		netstat
+		
+		You should see the LISTEN process running on port 8888 and other services on the ip address of your device
 
 7.  From within your CouchApp project directory, run the following command to install your couchapp on the device.
 
-    couchapp push . http://localhost:8984/couchapp
+	cd path_to_project/Android-TouchDB-Cordova/examples/CordovaCouchApp/couchapp
+	
+    couchapp push http://ip_address_of_your_device:8888/ccap
+    	e.g. couchapp push http://192.168.0.6:8888/ccap
+    
+    Note: ddoc name and db specified in res/raw/cordovacouchapp.properties. 
+    If you are using a different couchapp, check its ddoc name in ypur couchapp's _id file 
 
-8.  Refresh the list of CouchApps and navigate to your applicaiton
+8.  In a browser, test the couchapp installation went OK
+
+	http://192.168.0.6:8888/ccap/_design/cordovacouchapp/index.html
+
+9.  Allow the debug to complete and re-run the android app
+
+	This should now work.
 
 ### Distribution
 
