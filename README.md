@@ -13,7 +13,9 @@ These instructions are divided into two sections, the first describes the develo
 ### Development (assumes using Eclipse)
 1.  Clone the couchbaselabs/TouchDB-Android repository
 
-	run the TestApp
+	This application has been tested with commit/59ddf37d6e7bb819f969909971c202eab8c44119 
+
+	run the TouchDB-Android-TestApp
 
 2.  Clone this repository
 
@@ -23,16 +25,15 @@ These instructions are divided into two sections, the first describes the develo
 
 4.  Install/Launch this application on your device/emulator
 
-    It should now be installed, but waiting on a debugger breaKpoint 
+    The app should now be installed, waiting on a debugger breakpoint 
 
-5.  TouchDB is now running, so you can install your couchapp.
+5.  TouchDB is now active on the device, so you can install your couchapp.
 
 	You will need to know the ip address of your device.
-	If Terminal Emulator is installed on a rooted device type:
-		su
+	If a Terminal Emulator is installed on the device type:
 		netstat
 		
-		You should see the LISTEN process running on port 8888 and other services on the ip address of your device
+	You should see the LISTEN process running on port 8888 and other services on the ip address of your device
 
 7.  From within your CouchApp project directory, run the following command to install your couchapp on the device.
 
@@ -42,17 +43,18 @@ These instructions are divided into two sections, the first describes the develo
     	e.g. couchapp push http://192.168.0.6:8888/ccap
     
     Note: ddoc name and db specified in res/raw/cordovacouchapp.properties. 
-    If you are using a different couchapp, check its ddoc name in ypur couchapp's _id file 
+    If you are using a different couchapp, check its ddoc name in your couchapp's _id file 
 
 8.  In a browser, test the couchapp installation went OK
 
 	http://192.168.0.6:8888/ccap/_design/cordovacouchapp/index.html
 
-9.  Allow the debug to complete and re-run the android app
+9.  Allow eclipse debug to complete. Re-run the android app from eclipse or directly on the device
 
 	This should now work.
+	It is not necessary to use debug and install the couchapp after the first time, since the couchapp is persistent.
 
-### Distribution
+### Distribution (Note : this section is not tested for Android-TouchDB-Cordova)
 
 1.  Compact your database
 
@@ -73,58 +75,6 @@ These instructions are divided into two sections, the first describes the develo
     adb install bin/AndroidCouchbaseCallback-debug.apk
 
     adb shell am start -n com.couchbase.callback/.AndroidCouchbaseCallback
-
-## Examples
-
-Android Couchbase Callback now includes a couple of sample applications to help you get started.
-
-* PhoneGapCouchApp - this is basic PhoneGap demonstration application hosted inside a couchapp
-    1. Follow the development instructions above
-    2. cd examples/PhoneGapCouchApp/couchapp
-    3. couchapp push http://localhost:8984/phonegapcouchapp
-    4. Click refresh link on welcome page
-
-* PhotoShare - this photo sharing application shows the power of using Couchbase Mobile with Apache Callback to build real applications
-    1. Follow the development instructions above
-    2. cd examples/PhotoShare/couchapp
-    3. couchapp push http://localhost:8984/photoshare
-    4. (Optional) Refactor the ExampleAppActivity class and package name (see https://github.com/couchbaselabs/Android-Couchbase-Callback/blob/master/examples/PhotoShare/src/com/docomoinnovations/couchbase/photoshare/PhotoShare.java)
-    5. (Optional) Replace the application icon with a custom icon (see https://github.com/couchbaselabs/Android-Couchbase-Callback/blob/master/examples/PhotoShare/res/drawable/icon.png)
-    6. (Optional) Update the app_name string (see https://github.com/couchbaselabs/Android-Couchbase-Callback/blob/master/examples/PhotoShare/res/values/strings.xml)
-
-## Assumptions
-
-A few assumptions are currently made to reduce the number of options that must be configured to get started.  Currently these can only be changed by modifying the code.
-
--  The name of the database can be anything (couchapp is used in the examples above).  BUT, the design document must have the same name.
-    
-## Further Customizations
-
-*  Change the name and package of your application
-
-    Refactor name and package of ExampleAppActivity to suit your needs
-
-*  Provide your own custom splash screen
-
-    Override the getSplashScreenDrawable() method to point to your splash screen image
-
-## Frequently Asked Questions
-
-Q: When I start my application the splash screen shows for a long time, then I get the message "Application Error: The connection to the server was unsuccessful."  In the background behind this message I now see my application.  But when I press OK, the application exits.  What is going on?
-
-A: Most likely your application is loading a resource (something like the _chagnes feed) and this causes the PhoneGap container to fail to recognize that the page has loaded.  The fix is simple, add a function to your application that listens for the "deviceReady" event and start your work after this event fires.  For example:
-
-    document.addEventListener("deviceready", onDeviceReady, false);
-    
-    function onDeviceReady() {
-        //  start listenting to changes feed here
-    }
-
-We are still looking for a better approach to this problem.
-
-## TODO
-
-* spoof a call to `onPageFinished` so that phonegap paints the screen even if a long ajax call happens before onload.
 
 ## License
 

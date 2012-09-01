@@ -1,0 +1,12 @@
+{
+	"_id": "0e6f3f9860dbf656b06e59a7550011b0",
+	"type": "default_profile",
+	"profile": {
+		"maxcTags": 20,
+		"minAkin": 0.2
+		"focus": {
+			"id" : "000000000",
+			"breadth" : 8
+		}
+	}
+}

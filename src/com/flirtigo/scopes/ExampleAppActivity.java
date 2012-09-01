@@ -1,4 +1,4 @@
-package com.touchdb.cordova;
+package com.flirtigo.scopes;
 
 /**
  * This is the main activity for your application.

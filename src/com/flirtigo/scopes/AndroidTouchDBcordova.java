@@ -13,7 +13,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package com.touchdb.cordova;
+package com.flirtigo.scopes;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -124,7 +124,7 @@ public class AndroidTouchDBcordova extends DroidGap
         Properties properties = new Properties();
 
         try {
-        	InputStream rawResource = getResources().openRawResource(R.raw.cordovacouchapp);
+        	InputStream rawResource = getResources().openRawResource(R.raw.couchapp);
         	properties.load(rawResource);
         } catch (Resources.NotFoundException e) {
         	System.err.println("Did not find raw resource: " + e);
