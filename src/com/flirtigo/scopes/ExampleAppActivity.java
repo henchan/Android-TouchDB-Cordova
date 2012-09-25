@@ -1,5 +1,21 @@
 package com.flirtigo.scopes;
 
+import java.io.IOException;
+
+import org.ektorp.CouchDbConnector;
+import org.ektorp.CouchDbInstance;
+import org.ektorp.ReplicationCommand;
+import org.ektorp.ReplicationStatus;
+import org.ektorp.http.HttpClient;
+import org.ektorp.impl.StdCouchDbInstance;
+
+import android.os.Bundle;
+import android.util.Log;
+
+import com.couchbase.touchdb.TDServer;
+import com.couchbase.touchdb.ektorp.TouchDBHttpClient;
+import com.couchbase.touchdb.router.TDURLStreamHandlerFactory;
+
 /**
  * This is the main activity for your application.
  *
@@ -7,14 +23,43 @@ package com.flirtigo.scopes;
  *
  */
 public class ExampleAppActivity extends AndroidTouchDBcordova {
+	
+	{
+	    TDURLStreamHandlerFactory.registerSelfIgnoreError();
+	}
 
     /**
      * Override this method to do additional work upon startup
      */
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+     // start TouchDB
+        TDServer server = null;
+        String filesDir = getFilesDir().getAbsolutePath();
+        try {
+          server = new TDServer(filesDir);
+        } catch (IOException e) {
+          Log.e(TAG, "Error starting TDServer", e);
+        }
+
+        // start TouchDB-Ektorp adapter
+        HttpClient httpClient = new TouchDBHttpClient(server);
+        CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
+
+        // create a local database
+        CouchDbConnector dbConnector = dbInstance.createConnector("flirtigo_db", true);
+
+        // pull the application database
+        ReplicationCommand pullCommand = new ReplicationCommand.Builder()
+            .source("http://192.168.0.22:5984/flirtigo_db")
+            .target("flirtigo_db")
+            .continuous(false)
+            .build();
+
+        ReplicationStatus status = dbInstance.replicate(pullCommand);
+    }
 
     /**
      * Override this method to do additional work after Couchbase has started

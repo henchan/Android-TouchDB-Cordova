@@ -1,1 +1,0 @@
-## This couchapp is the source for the welcome page

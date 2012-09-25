@@ -68,7 +68,7 @@ Backbone.d3.Canned["Calendar"] =
     change_feed: true
     couch: () ->
       view: 'flirtigo/type'
-      key: 'flapp'
+      key: 'crashes'
       include_docs: true  
     
     model: @Model

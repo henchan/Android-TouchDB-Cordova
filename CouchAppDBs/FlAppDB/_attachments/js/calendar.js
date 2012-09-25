@@ -83,7 +83,7 @@
       couch: function() {
         return {
           view: 'flirtigo/type',
-          key: 'flapp',
+          key: 'crashes',
           include_docs: true
         };
       },

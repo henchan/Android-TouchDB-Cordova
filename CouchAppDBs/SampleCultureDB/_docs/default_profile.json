@@ -3,7 +3,7 @@
 	"type": "default_profile",
 	"profile": {
 		"maxcTags": 20,
-		"minAkin": 0.2
+		"minAkin": 0.2,
 		"focus": {
 			"id" : "000000000",
 			"breadth" : 8
