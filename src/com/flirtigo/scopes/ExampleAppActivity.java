@@ -24,18 +24,17 @@ import com.couchbase.touchdb.router.TDURLStreamHandlerFactory;
  */
 public class ExampleAppActivity extends AndroidTouchDBcordova {
 	
+	// prepare to auto-sync from Master DB
 	{
 	    TDURLStreamHandlerFactory.registerSelfIgnoreError();
 	}
 
-    /**
-     * Override this method to do additional work upon startup
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-     // start TouchDB
+     // start TouchDB and auto-sync from Master DB
+
         TDServer server = null;
         String filesDir = getFilesDir().getAbsolutePath();
         try {

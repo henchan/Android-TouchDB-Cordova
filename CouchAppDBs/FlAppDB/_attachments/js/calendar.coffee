@@ -65,10 +65,11 @@ Backbone.d3.Canned["Calendar"] =
   )
   Collection: Backbone.d3.couch.PlotCollection.extend(
     _db: Backbone.couch.db 'flirtigo_db'
-    change_feed: true
+    change_feed: false
     couch: () ->
       view: 'flirtigo/type'
       key: 'crashes'
+      limit: 100
       include_docs: true  
     
     model: @Model
