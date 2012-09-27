@@ -23,7 +23,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus"/>
 
     <application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true">
-		<activity android:name="ExampleAppActivity" android:label="@string/app_name" android:configChanges="orientation|keyboardHidden">
+		<activity android:name=".ATCAppActivity" android:label="@string/app_name" android:configChanges="orientation|keyboardHidden">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
