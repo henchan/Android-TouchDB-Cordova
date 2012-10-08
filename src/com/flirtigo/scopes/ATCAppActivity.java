@@ -24,7 +24,7 @@ import com.couchbase.touchdb.router.TDURLStreamHandlerFactory;
  */
 public class ATCAppActivity extends AndroidTouchDBcordova {
 
-	// prepare to auto-sync from Master DB
+	// prepare to auto-sync from Master DBs
 	{
 		TDURLStreamHandlerFactory.registerSelfIgnoreError();
 	}
@@ -32,45 +32,6 @@ public class ATCAppActivity extends AndroidTouchDBcordova {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		// start TouchDB and auto-sync from Master DB
-//		pullMasterCulture();
-		pullMasterApp();
-	}
-
-	public void pullMasterCulture() {
-
-		// start TouchDB and auto-sync from Master DB
-
-		TDServer server = null;
-		String filesDir = getFilesDir().getAbsolutePath();
-		try {
-			server = new TDServer(filesDir);
-		} catch (IOException e) {
-			Log.e(TAG, "Error starting TDServer", e);
-		}
-
-		// start TouchDB-Ektorp adapter
-		HttpClient httpClient = new TouchDBHttpClient(server);
-		CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
-
-		// create a local database
-		CouchDbConnector dbConnector = dbInstance.createConnector(
-				"flirtigo_db", true);
-
-		// pull the application database
-		ReplicationCommand pullCommand = new ReplicationCommand.Builder()
-				.source("http://192.168.0.22:5984/flirtigo_db")
-				.target("flirtigo_db").continuous(false).build();
-
-		ReplicationStatus status = dbInstance.replicate(pullCommand);
-		
-
-	}
-
-	public void pullMasterApp() {
-
-		// start TouchDB and auto-sync from Master DB
 
 		TDServer server = null;
 		String filesDir = getFilesDir().getAbsolutePath();
@@ -88,14 +49,23 @@ public class ATCAppActivity extends AndroidTouchDBcordova {
 		CouchDbConnector dbConnector = dbInstance.createConnector(
 				"flapp", true);
 
+		// start TouchDB and auto-sync from Master DBs
+		// Master app 
+		pullMaster(dbInstance, "http://192.168.0.22:5984/flapp", "flapp");
+		// Master Culture
+		pullMaster(dbInstance, "http://192.168.0.22:5984/def_cult", "def_cult");
+	}
+
+	public void pullMaster(CouchDbInstance dbInstance, String source, String target) {
+
+		// start TouchDB and auto-sync from Master DB
+
 		// pull the application database
 		ReplicationCommand pullCommand = new ReplicationCommand.Builder()
-				.source("http://192.168.0.22:5984/flapp")
-				.target("flapp").continuous(false).build();
+				.source(source)
+				.target(target).continuous(false).build();
 
 		ReplicationStatus status = dbInstance.replicate(pullCommand);
-		
-
 	}
 
 
